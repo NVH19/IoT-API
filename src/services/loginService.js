@@ -55,6 +55,10 @@ const genRefreshToken = async (user) => {
     return refreshToken;
 }
 
+// const changPassword = async (newPass, oldPass){
+
+// }
+
 module.exports = {
     getUserName,
     hashPassword, checkUser, isValidEmail, checkEmailExist, checkUsernameExist,

@@ -58,6 +58,7 @@ let checkLogin = async (req, res) => {
         return res.status(500).json({ status: 500, title: 'Error', message: 'Đã có lỗi xảy ra khi đăng nhập!' });
     }
 };
+
 // Middleware để xác thực access token
 let authenToken = async (req, res, next) => {
     const authHeader = req.headers['authorization']; // Dạng Bearer Token
@@ -75,6 +76,17 @@ let user = async (req, res) => {
     return res.json(req.user);
 }
 
+let changPassword = async (req,res) =>{
+    const {oldPass, newPass} = req.body;
+    try{
+        if(oldPass == "" || newPass == ""){
+            return res.status(400).json({ status: 400, title: 'Warning', message: 'Vui lòng điền đầy đủ thông tin!' });
+        }
+        
+    }catch(e){
+
+    }
+}
 
 module.exports = {
     getLogin,
