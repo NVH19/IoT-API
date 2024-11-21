@@ -1,5 +1,5 @@
 const axios = require('axios');
-
+const db = require('../models/index')
 // Biến lưu trữ giá trị độ ẩm
 let humidity = 0;
 
@@ -84,8 +84,14 @@ let controlPump = async (req,res) =>{
     try {
         // Gửi lệnh bật/tắt máy bơm đến Arduino qua HTTP
         // const response = await axios.get(`http://localhost:8080/pump?state=${state}`);
+        const newHistory = await db.History.create({
+            state: state,
+            time: new Date().toISOString() // Save the current time
+        });
         console.log(`Pump state: ${state}`);
-        res.send({ message: `Pump is now ${state}` });
+        res.send({ message: `Pump is now ${state}`,
+            history: newHistory
+        });
     } catch (error) {
         console.error("Error controlling pump:", error);
         res.status(500).send({ error: "Error controlling pump" });
