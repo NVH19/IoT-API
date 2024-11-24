@@ -98,8 +98,31 @@ let controlPump = async (req,res) =>{
     }
 };
 
+let getHistory = async (req, res) => {
+    try {
+        // Lấy tất cả các bản ghi trong bảng History
+        const historyRecords = await db.History.findAll({
+            order: [['time', 'DESC']] // Sắp xếp theo thời gian giảm dần (mới nhất trước)
+        });
+
+        // Kiểm tra xem có dữ liệu không
+        if (historyRecords.length === 0) {
+            return res.status(404).send({ message: 'No history records found' });
+        }
+
+        // Trả về danh sách lịch sử
+        res.json({
+            history: historyRecords
+        });
+    } catch (error) {
+        console.error('Error fetching history:', error.message);
+        res.status(500).send({ error: 'Error fetching history' });
+    }
+};
+
+
 module.exports = {
-    getWeather,
+    getWeather, getHistory,
     getHumidity,
     sendHumidity,
     controlPump
