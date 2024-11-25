@@ -1,2 +1,2 @@
-1. npm i
-2. create .env
+# npm i
+# create .env
